@@ -1,0 +1,18 @@
+{
+  "systemParams": "win32-x64-57",
+  "modulesFolders": [
+    "wwwroot\\lib"
+  ],
+  "flags": [],
+  "linkedModules": [],
+  "topLevelPatterns": [
+    "bootstrap@^4.1.1",
+    "popper.js@^1.14.3"
+  ],
+  "lockfileEntries": {
+    "bootstrap@^4.1.1": "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.1.1.tgz#3aec85000fa619085da8d2e4983dfd67cf2114cb",
+    "popper.js@^1.14.3": "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.3.tgz#1438f98d046acf7b4d78cd502bf418ac64d4f095"
+  },
+  "files": [],
+  "artifacts": {}
+}
