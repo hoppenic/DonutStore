@@ -1,0 +1,23 @@
+﻿@model Product
+
+@{ 
+    ViewData["Title"] = "Details";
+}
+
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" ">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Product" asp-action="Index">Shop</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+        <img class="img-rounded" src="@Model.Image" alt="@Model.Name" />
+
+    </div>
+
+
+</div>
