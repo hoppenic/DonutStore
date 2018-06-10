@@ -6,6 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using donutstore.Models;
+using Newtonsoft.Json.Serialization;
+
+
 
 namespace donutstore
 {
@@ -21,6 +28,13 @@ namespace donutstore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<IdentityDbContext>(opt => opt.UseInMemoryDatabase("Identities"));
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+
             services.AddMvc();
         }
 
@@ -37,7 +51,11 @@ namespace donutstore
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            //this instructs app to use cookies for sign in/out
             app.UseStaticFiles();
+            app.UseAuthentication();
+
+        
 
             app.UseMvc(routes =>
             {

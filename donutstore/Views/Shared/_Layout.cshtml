@@ -35,6 +35,29 @@
                     <li><a asp-area="" asp-controller="Product" asp-action="Index">Shop Donuts</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
 
+                    
+                    @if(!User.Identity.IsAuthenticated)
+                    {
+                    <li> <a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
+                    }
+                    else
+                    {
+                        <li> <a asp-area="" asp-controller="Account" asp-action="SignOut">Sign Out</a></li>
+                    }
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li> </li>
+
+                    }
+                    else
+                    {
+                     <li><a asp-area="" asp-controller="Account" asp-action="SignIn">Sign In</a></li>
+
+
+                    }
+
+
                 </ul>
             </div>
         </div>
