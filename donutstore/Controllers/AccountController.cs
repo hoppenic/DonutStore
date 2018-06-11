@@ -12,10 +12,10 @@ namespace donutstore.Controllers
 {
     public class AccountController : Controller     
     {
-        SignInManager<IdentityUser> _signInManager;
+        SignInManager<DonutStoreUser> _signInManager;
 
         //using Microsoft.AspNetCore.Identity
-        public AccountController(SignInManager<IdentityUser> signInManager)
+        public AccountController(SignInManager<DonutStoreUser> signInManager)
         {
             this._signInManager = signInManager;
         }
@@ -39,7 +39,14 @@ namespace donutstore.Controllers
 
             if (ModelState.IsValid)
             {
-                IdentityUser newUser = new IdentityUser(model.UserName);
+                DonutStoreUser newUser = new DonutStoreUser
+                {
+                    UserName = model.UserName,
+                    Email=model.Email,
+                    FirstName=model.FirstName,
+                    LastName=model.LastName,
+                    PhoneNumber=model.PhoneNumber
+                };
 
                 IdentityResult creationResult = this._signInManager.UserManager.CreateAsync(newUser).Result;
                 if (creationResult.Succeeded)
@@ -75,6 +82,8 @@ namespace donutstore.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+        //responds on GET
         public IActionResult SignIn()
         {
             return View();
@@ -87,7 +96,7 @@ namespace donutstore.Controllers
             if (ModelState.IsValid)
             {
 
-                IdentityUser existingUser = this._signInManager.UserManager.FindByNameAsync(model.UserName).Result;
+                DonutStoreUser existingUser = this._signInManager.UserManager.FindByNameAsync(model.UserName).Result;
                 if (existingUser != null)
                 {
                     Microsoft.AspNetCore.Identity.SignInResult passwordResult = this._signInManager.CheckPasswordSignInAsync(existingUser, model.Password, false).Result;

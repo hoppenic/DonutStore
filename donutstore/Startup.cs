@@ -28,7 +28,9 @@ namespace donutstore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<IdentityDbContext>(opt => opt.UseInMemoryDatabase("Identities"));
+
+            string DonutStoreConnectionString = Configuration.GetConnectionString("donutstore");
+            services.AddDbContext<DonutStoreDbContext>(opt => opt.UseSqlServer(DonutStoreConnectionString));
 
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityDbContext>()
