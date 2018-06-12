@@ -4,12 +4,10 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
 
-<h4>Product</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4" enctype="multpart/form-data">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
@@ -30,6 +28,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
+                <img src="@Model.Image" class="img-fluid" />
                 <input asp-for="Image" class="form-control" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
