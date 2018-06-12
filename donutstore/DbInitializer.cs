@@ -17,20 +17,22 @@ namespace donutstore
             {
                 db.Products.Add(new Product
                 {
-                    Name = "Long John Donut",
-                    Description = "Chocolate covered",
+                    Name = "Sprinkles Donut",
+                    Description = "Homer Simpson Style Donut",
                     Image = "/images/donut1.jpeg",
                     Price = 1.99m
 
                 });
                 db.Products.Add(new Product
                 {
-                    Name = "Bear Claw Donut",
-                    Description = "Chocolate covered",
+                    Name = "Mix and Match",
+                    Description = "Various Donuts",
                     Image = "/images/donut3.jpeg",
                     Price = 2.99m
 
                 });
+
+                db.SaveChanges();
             }
 
         }

@@ -16,8 +16,29 @@
 <div class="row">
     <div class="col-md-4 col-sm-12">
         <img class="img-rounded" src="@Model.Image" alt="@Model.Name" />
-
     </div>
+
+
+    <div class="col-sm-12 col-md-8">
+        <h3>@Model.Name</h3>
+
+        <h4>@Model.Description</h4>
+        <p> Price/lb:@(Model.Price.HasValue ? Model.Price.Value.ToString("C") : "No Price")</p>
+
+        <form method="post">
+            <input asp-for="ID" type="hidden" />
+            <select name="quantity">
+                @for (int i = 0; i < 10; i++)
+                {
+                    <option value="@i">@i</option>
+
+                }
+            </select>
+            <input type="submit" class=" btn btn-dark" value="add-to cart" />
+        </form>
+    </div>
+
+
 
 
 </div>
