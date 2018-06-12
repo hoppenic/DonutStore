@@ -4,44 +4,34 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using donutstore.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace donutstore.Controllers
 {
     public class ProductController : Controller
     {
-        private List<Product> _products;
+        private readonly DonutStoreDbContext _context;
 
-
-        public ProductController()
+        public ProductController(DonutStoreDbContext context)
         {
-            _products = new List<Product>();
-            _products.Add(new Product
-            {
-                ID = 1,
-                Name = "Chocolate Donut",
-                Description = "Delicious Chocolate Donut",
-                Image = "/images/ChocolateDonut.jpeg",
-                Price = 2.99m
 
-            });
-
-            _products.Add(new Product
-            {
-                ID=2,
-                Name="Sprinkles Donut",
-                Description="Donut with sprinkles",
-                Image="/images/donut2.jpeg",
-                Price=3.99m
-
-            });
-
+            _context = context;
         }
+
+
+        public IActionResult Index()
+        {
+            List<Product> products = _context.Products.ToList();
+            return View(products);
+        }
+
+
 
         public IActionResult Details(int? id)
         {
             if (id.HasValue)
             {
-                Product p = _products.Single(x => x.ID == id.Value);
+                Product p = _context.Products.Find(id.Value);
                 return View(p);
             }
 
@@ -50,9 +40,5 @@ namespace donutstore.Controllers
 
 
 
-        public IActionResult Index()
-        {
-            return View(_products);
-        }
     }
 }
