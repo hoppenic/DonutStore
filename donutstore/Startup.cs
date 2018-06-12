@@ -29,11 +29,12 @@ namespace donutstore
         public void ConfigureServices(IServiceCollection services)
         {
 
-            string DonutStoreConnectionString = Configuration.GetConnectionString("donutstore");
+            string DonutStoreConnectionString = Configuration.GetConnectionString("DonutStore");
+
             services.AddDbContext<DonutStoreDbContext>(opt => opt.UseSqlServer(DonutStoreConnectionString));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<IdentityDbContext>()
+            services.AddIdentity<DonutStoreUser, IdentityRole>()
+                .AddEntityFrameworkStores<DonutStoreDbContext>()
                 .AddDefaultTokenProviders();
 
 

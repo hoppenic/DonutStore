@@ -32,11 +32,7 @@ namespace donutstore.Models
 
     public class DonutStoreUser : IdentityUser
     {
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
-
-
     }
 }
