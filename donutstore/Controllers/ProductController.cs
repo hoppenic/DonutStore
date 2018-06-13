@@ -67,9 +67,21 @@ namespace donutstore.Controllers
 
             }
 
+            CartItem item = cart.CartItems.FirstOrDefault(x => x.Product.ID == id);
+            if (item == null)
+            {
+                item = new CartItem();
+                item.Product = _context.Products.Find(id);
+                cart.CartItems.Add(item);
+            }
+            item.Quantity += quantity;
+            cart.LastModified = DateTime.Now;
+
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Cart");
+
 
         }
-
 
 
     }
