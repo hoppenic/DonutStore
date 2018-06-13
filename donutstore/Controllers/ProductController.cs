@@ -11,28 +11,28 @@ namespace donutstore.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly DonutStoreDbContext _context;
+        private readonly DonutStoreDbContext _donutStoreDbContext;
 
-        public ProductController(DonutStoreDbContext context)
+        public ProductController(DonutStoreDbContext donutStoreDbContext)
         {
 
-            _context = context;
+            _donutStoreDbContext = donutStoreDbContext;
         }
 
 
         public IActionResult Index()
         {
-            List<Product> products = _context.Products.ToList();
+            List<Product> products = _donutStoreDbContext.Products.ToList();
             return View(products);
         }
 
 
 
-        public IActionResult Details(int? id)
+        public IActionResult Details(int? ID)
         {
-            if (id.HasValue)
+            if (ID.HasValue)
             {
-                Product p = _context.Products.Find(id.Value);
+                Product p = _donutStoreDbContext.Products.Find(ID.Value);
                 return View(p);
             }
 
@@ -41,7 +41,7 @@ namespace donutstore.Controllers
 
 
         [HttpPost]
-        public IActionResult Details(int id,int quantity = 1)
+        public IActionResult Details(int ID,int quantity = 1)
         {
             Guid cartId;
             Cart cart = null;
@@ -49,7 +49,7 @@ namespace donutstore.Controllers
             {
                 if(Guid.TryParse(Request.Cookies["cartid"], out cartId))
                 {
-                    cart = _context.Carts
+                    cart = _donutStoreDbContext.Carts
                     .Include(Carts => Carts.CartItems)
                     .ThenInclude(CartItems => CartItems.Product)
                     .FirstOrDefault(x => x.CookieIdentifier == cartId);
@@ -62,22 +62,22 @@ namespace donutstore.Controllers
                 cartId = Guid.NewGuid();
                 cart.CookieIdentifier = cartId;
 
-                _context.Carts.Add(cart);
+                _donutStoreDbContext.Carts.Add(cart);
                 Response.Cookies.Append("cartId", cartId.ToString(), new Microsoft.AspNetCore.Http.CookieOptions { Expires = DateTime.UtcNow.AddYears(100) });
 
             }
 
-            CartItem item = cart.CartItems.FirstOrDefault(x => x.Product.ID == id);
+            CartItem item = cart.CartItems.FirstOrDefault(x => x.Product.ID == ID);
             if (item == null)
             {
                 item = new CartItem();
-                item.Product = _context.Products.Find(id);
+                item.Product = _donutStoreDbContext.Products.Find(ID);
                 cart.CartItems.Add(item);
             }
             item.Quantity += quantity;
             cart.LastModified = DateTime.Now;
 
-            _context.SaveChanges();
+            _donutStoreDbContext.SaveChanges();
             return RedirectToAction("Index", "Cart");
 
 

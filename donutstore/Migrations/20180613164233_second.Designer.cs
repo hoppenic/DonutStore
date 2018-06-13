@@ -11,9 +11,10 @@ using System;
 namespace donutstore.Migrations
 {
     [DbContext(typeof(DonutStoreDbContext))]
-    partial class DonutStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180613164233_second")]
+    partial class second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

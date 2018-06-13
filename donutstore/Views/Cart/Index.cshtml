@@ -1,15 +1,14 @@
-﻿@model Cart
+﻿
+@model Cart
 @{
     ViewData["Title"] = "Index";
 }
-
-
 
 <h2>Index</h2>
 @if (Model.CartItems.Count == 0)
 {
     <p>You have no items in your cart!</p>
-    <a asp-action="Index" asp-controller="Home">Go Home</a>
+    <a asp-controller="Product" asp-action="Index" >Shop More!</a>
 }
 else
 {
@@ -34,4 +33,18 @@ else
         }
     </table>
 
+
+    <div class="row">
+        <div class="col-md-4 col-lg-6">
+            <form method="get">
+                <input type="submit" class="btn btn-primary" value="Shop More" asp-area="" asp-controller="Product" asp-action="Index">
+                <input type="submit" class="btn btn-primary" value="Checkout" asp-area="" asp-controller="Checkout" asp-action="Index">
+
+            </form>
+        </div>
+    </div>
+
 }
+
+
+
