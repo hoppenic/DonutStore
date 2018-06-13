@@ -12,12 +12,12 @@ namespace donutstore.Controllers
     public class CartController : Controller
     {
         //this is injecting my DonutStoreDbContext
-        private readonly DonutStoreDbContext _context;
+        private readonly DonutStoreDbContext _donutStoreDbContext;
 
         public CartController(DonutStoreDbContext context)
         {
 
-            _context = context;
+            _donutStoreDbContext = context;
         }
 
 
@@ -31,7 +31,7 @@ namespace donutstore.Controllers
             {
                 if(Guid.TryParse(Request.Cookies["cartId"],out cartID))
                 {
-                    cart = _context.Carts
+                    cart = _donutStoreDbContext.Carts
                         .Include(Carts => Carts.CartItems)
                         .ThenInclude(CartItems => CartItems.Product)
                         .FirstOrDefault(x => x.CookieIdentifier == cartID);
@@ -42,7 +42,7 @@ namespace donutstore.Controllers
                 cart = new Cart();
 
             }
-            return View();
+            return View(cart);
         }
 
 
@@ -54,7 +54,7 @@ namespace donutstore.Controllers
             {
                 if(Guid.TryParse(Request.Cookies["cartId"],out cartId))
                 {
-                    cart = _context.Carts
+                    cart = _donutStoreDbContext.Carts
                         .Include(Carts => Carts.CartItems)
                         .ThenInclude(CartItems => CartItems.Product)
                         .FirstOrDefault(x => x.CookieIdentifier == cartId);
@@ -63,8 +63,8 @@ namespace donutstore.Controllers
 
             CartItem item = cart.CartItems.FirstOrDefault(x => x.ID == id);
             cart.LastModified = DateTime.Now;
-            _context.CartItems.Remove(item);
-            _context.SaveChanges();
+            _donutStoreDbContext.CartItems.Remove(item);
+            _donutStoreDbContext.SaveChanges();
             return RedirectToAction("Index");
         }
 
