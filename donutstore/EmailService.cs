@@ -7,12 +7,10 @@ namespace donutstore
 {
     public class SendEmailResult
     {
-
         public bool Success { get; set; }
         public string Message { get; set; }
 
     }
-
 
 
 
@@ -37,27 +35,28 @@ namespace donutstore
             message.SetTemplateId("cc6c2090 - 780c - 4b81 - 8355 - ad1776efd1de");
             var mailResult = await _sendGridClient.SendEmailAsync(message);
 
-            SendEmailResult result = new SendEmailResult();
+          
             if ((mailResult.StatusCode == System.Net.HttpStatusCode.OK) || (mailResult.StatusCode == System.Net.HttpStatusCode.Accepted))
             {
-                result.Success = true;
+                return new SendEmailResult
+                {
+                    Success = true
+                };
+
+
             }
             else
             {
-                var badMailResponse = mailResult.DeserializeResponseBody(mailResult.Body);
-                result.Success = false;
-                foreach (var error in badMailResponse["errors"])
+                return new SendEmailResult
                 {
-                    result.Errors.Add(new SendEmailResult.SendEmailError
-                    {
-                        Message = error.message,
-                        Field = error.field,
-                        Help = error.help
-                    });
-                }
+                    Success = false,
+                    Message = await mailResult.Body.ReadAsStringAsync()
 
+                };
             }
-            return result;
+
+            
+               
 
 
 

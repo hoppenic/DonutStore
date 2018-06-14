@@ -39,6 +39,8 @@ namespace donutstore
 
 
             services.AddMvc();
+
+            services.AddTransient((x) => { return new EmailService(Configuration["SendGridKey"]); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
