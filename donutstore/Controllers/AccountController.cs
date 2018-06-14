@@ -68,6 +68,7 @@ namespace donutstore.Controllers
                         this._signInManager.SignInAsync(newUser, false);
 
                         var emailResult =this._emailService.SendEmailAsync(model.Email, "Welcome to Flavor Town Burgers", "<p> Thanks for signing up, " + model.Email + "!</p><p>< a href =\"" + confirmationUrl + "\">Confirm your account<a></p>", "Thanks for signing up, " + model.Email);
+                        //need to fix these two below different from burger store, couldnt work
                         if (emailResult.IsCompletedSuccessfully)
                             return RedirectToAction("Index", "Home");
                         else
@@ -194,10 +195,30 @@ namespace donutstore.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(string id, string userId, string password)
+        {
+            var user = await _signInManager.UserManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                await _signInManager.UserManager.ResetPasswordAsync(user, id, password);
+                return RedirectToAction("SignIn");
+            }
+            return BadRequest();
+        }
 
 
-
-
+        public async Task<IActionResult> Confirm(string id, string userId)
+        {
+            var user = await _signInManager.UserManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                await _signInManager.UserManager.ConfirmEmailAsync(user, id);
+                return RedirectToAction("Index", "Home");
+            }
+            return BadRequest();
+        }
 
 
 
