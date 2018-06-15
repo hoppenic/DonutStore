@@ -38,7 +38,7 @@ namespace donutstore.Controllers
         // Responds on POST /Account/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
 
             if (ModelState.IsValid)
@@ -65,14 +65,14 @@ namespace donutstore.Controllers
                         System.Uri uri = new Uri(currentUrl);
                         string confirmationUrl = uri.GetLeftPart(UriPartial.Authority);
                         confirmationUrl += "/account/confirm?id=" + confirmationToken + "&userId=" + System.Net.WebUtility.UrlEncode(newUser.Id);
-                        this._signInManager.SignInAsync(newUser, false);
+                        await this._signInManager.SignInAsync(newUser, false);
 
-                        var emailResult =this._emailService.SendEmailAsync(model.Email, "Welcome to Flavor Town Burgers", "<p> Thanks for signing up, " + model.Email + "!</p><p>< a href =\"" + confirmationUrl + "\">Confirm your account<a></p>", "Thanks for signing up, " + model.Email);
-                        //need to fix these two below different from burger store, couldnt work
-                        if (emailResult.IsCompletedSuccessfully)
+                        var emailResult = await this._emailService.SendEmailAsync(model.Email, "Welcome to the Donut Store", "<p> Thanks for signing up, " + model.Email + "!</p><p>< a href =\"" + confirmationUrl + "\">Confirm your account<a></p>", "Thanks for signing up, " + model.Email);
+                       
+                        if (emailResult.Success)
                             return RedirectToAction("Index", "Home");
                         else
-                            return BadRequest(emailResult.IsCanceled);
+                            return BadRequest(emailResult.Message);
                         
                     }
                     else

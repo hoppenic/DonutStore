@@ -32,7 +32,7 @@ namespace donutstore
             var message = SendGrid.Helpers.Mail.MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
 
             //you have to get this ID from your sendgrid template
-            message.SetTemplateId("cc6c2090 - 780c - 4b81 - 8355 - ad1776efd1de");
+            message.SetTemplateId("cc6c2090-780c-4b81-8355-ad1776efd1de");
             var mailResult = await _sendGridClient.SendEmailAsync(message);
 
           
