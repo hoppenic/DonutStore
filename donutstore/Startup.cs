@@ -41,6 +41,16 @@ namespace donutstore
             services.AddMvc();
 
             services.AddTransient((x) => { return new EmailService(Configuration["SendGridKey"]); });
+            services.AddTransient((x) => {
+                return new Braintree.BraintreeGateway(
+                Configuration["BraintreeEnvironment"],
+                Configuration["BraintreeMerchantId"],
+                Configuration["BraintreePublicKey"],
+                Configuration["BraintreePrivateKey"]);
+
+            });
+
+
 
 
             //smartystreets
