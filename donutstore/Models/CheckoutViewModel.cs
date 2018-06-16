@@ -22,8 +22,7 @@ namespace donutstore.Models
         [Display(Name = "Address")]
         public string ShippingAddressLine1 { get; set; }
 
-        [Display(Name = "Apartment/Unit/Suite")]
-        public string ShippingAddressLine2 { get; set; }
+     
 
         [Display(Name = "City")]
         public string ShippingLocale { get; set; }

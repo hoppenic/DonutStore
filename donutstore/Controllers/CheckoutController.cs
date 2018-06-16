@@ -19,7 +19,7 @@ namespace donutstore.Controllers
         private SignInManager<DonutStoreUser> _signInManager;
         private BraintreeGateway _brainTreeGateway;
 
-        public CheckoutController(DonutStoreDbContext donutStoreDbContext, EmailService emailService, SignInManager<DonutStoreUser> signInManager,BraintreeGateway braintreeGateway)
+        public CheckoutController(DonutStoreDbContext donutStoreDbContext, EmailService emailService, SignInManager<DonutStoreUser> signInManager, BraintreeGateway braintreeGateway)
         {
             _donutStoreDbContext = donutStoreDbContext;
             _emailService = emailService;
@@ -85,14 +85,13 @@ namespace donutstore.Controllers
                         ProductPrice = (x.Product.Price ?? 0),
                         Quantity = x.Quantity
                     }).ToArray(),
-                    AddressLine1 = model.ShippingAddressLine1,
-                    AddressLine2 = model.ShippingAddressLine2,
-                    Country = model.ShippingCountry,
-                    Email = model.ContactEmail,
-                    PhoneNumber = model.ContactPhoneNumber,
-                    Locale = model.ShippingLocale,
-                    PostalCode = model.ShippingPostalCode,
-                    Region = model.ShippingRegion
+                    ShippingAddress = model.ShippingAddressLine1,
+                    ShippingCountry = model.ShippingCountry,
+                    ContactEmail = model.ContactEmail,
+                    ContactPhoneNumber = model.ContactPhoneNumber,
+                    ShippingLocale = model.ShippingLocale,
+                    ShippingPostalCode = model.ShippingPostalCode,
+                    ShippingRegion = model.ShippingRegion
 
                 };
 
@@ -137,3 +136,4 @@ namespace donutstore.Controllers
 
         }
     }
+}
