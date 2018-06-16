@@ -41,6 +41,14 @@ namespace donutstore
             services.AddMvc();
 
             services.AddTransient((x) => { return new EmailService(Configuration["SendGridKey"]); });
+
+
+            //smartystreets
+            services.AddTransient((x) =>
+            {
+                SmartyStreets.ClientBuilder builder = new SmartyStreets.ClientBuilder(Configuration["SmartyStreetsAuthId"], Configuration["SmartyStreetsAuthToken"]);
+                return builder.BuildUsStreetApiClient();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
